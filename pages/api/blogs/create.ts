@@ -38,7 +38,7 @@ export default async function handler(
     let slug = blogTitle.replaceAll(" ", "-");
     const existingSlug = await Blog.findOne({ slug: slug});
     if (existingSlug) {
-     // Adding a number so 2 article can have the same slug
+     // Adding a number so 2 blog can have the same slug
      // We can add a new method here to handle multiple slug with same name
       slug = slug + "-" + "1"
     }

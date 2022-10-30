@@ -2,7 +2,7 @@ import { BlogInterface } from "@/types/blogData.types";
 import Link from "next/link";
 import React from "react";
 
-const Article: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
+const Blog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
   let date = new Date(blog.createdAt);
   let newDate =
     date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
@@ -38,4 +38,4 @@ const Article: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
   );
 };
 
-export default Article;
+export default Blog;

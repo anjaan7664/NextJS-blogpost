@@ -3,10 +3,9 @@ import connectMongo from "@/utils/connectMongo";
 import User from "@/models/user.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body)
-  
+  console.log(req.body);
 
-
+  const name = req.body.name as string;
   const email = req.body.email as string;
   const password = req.body.password as string;
 
@@ -21,6 +20,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   const hashedPassword = await hashPassword(password);
   const newUser = new User({
+    name,
     email,
     password: hashedPassword,
   });

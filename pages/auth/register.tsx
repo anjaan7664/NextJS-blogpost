@@ -25,11 +25,12 @@ async function createUser(email: string, password: string) {
 }
 
 function AuthForm() {
+  const router = useRouter();
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
-
-  async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
+  const [errors, setErrors] = useState({});
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const enteredEmail = emailInputRef.current?.value;
@@ -45,15 +46,21 @@ function AuthForm() {
     );
     const data = await response.data;
     if (response.status !== 200) {
-      throw new Error(data.message || "Something went wrong!");
+      setErrors(data.message);
     } else {
-      signIn("credentials", {
-        redirect: true,
+      const result = await signIn("credentials", {
+        redirect: false,
         username: enteredEmail,
         password: enteredPassword,
       });
+      if (!result?.error) {
+        // set some auth state
+        router.replace("/");
+      } else {
+        setErrors(result.error);
+      }
     }
-  }
+  };
 
   return (
     <section className="">

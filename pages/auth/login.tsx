@@ -23,7 +23,6 @@ const LoginFormComponent = () => {
       email: enteredEmail,
       password: enteredPassword,
     });
-console.log(result);
     if (!result?.error) {
       // set some auth state
       router.replace("/");
@@ -43,26 +42,25 @@ console.log(result);
         <form className="mt-8" onSubmit={submitHandler}>
           <input type="hidden" name="remember" value="true" />
           <fieldset>
-         
-              <input
-                aria-label="Email"
-                name="email"
-                type="email"
-                id="email"
-                ref={emailInputRef}
-                className="mb-3 relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
-                placeholder="Email"
-              />
-          
-              <input
-                id="password"
-                aria-label="Password"
-                name="password"
-                ref={passwordInputRef}
-                type="password"
-                className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
-                placeholder="Password"
-              />
+            <input
+              aria-label="Email"
+              name="email"
+              type="email"
+              id="email"
+              ref={emailInputRef}
+              className="mb-3 relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
+              placeholder="Email"
+            />
+
+            <input
+              id="password"
+              aria-label="Password"
+              name="password"
+              ref={passwordInputRef}
+              type="password"
+              className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
+              placeholder="Password"
+            />
           </fieldset>
 
           <fieldset className="flex items-center mt-6 ml-1 justify-between">
@@ -94,7 +92,6 @@ console.log(result);
               type="submit"
               className="w-2/5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             >
-            
               Sign in
             </button>
             <Link href="/auth/register">

@@ -4,7 +4,7 @@ import mongoose, { model, PaginateModel } from "mongoose";
 import paginate from "mongoose-paginate-v2";
 import { UserInterface } from "@/types/userData.types";
 export const UserSchema = new mongoose.Schema({
-  name: String,
+  name: {type:String},
   username: String,
   email: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   password: String,

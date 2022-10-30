@@ -31,17 +31,20 @@ export default async function handler(
   await runMiddleware(req, res, cors);
   try {
     await connectMongo();
-    const queryPerPage = parseInt(req.query.perPage as string);
-    const queryPage = parseInt(req.query.page as string);
-    const status = req.query.status || 'approved';
-    const result = await Blog.paginate({"status": status},
+    const blogId =  req.query.blogId;
+    const blogTitle = req.query.title;
+    const blogBody = req.query.body;
+
+    const blogPost = await Blog.updateOne(
+      { _id: blogId },
       {
-        page: queryPage,
-        limit: queryPerPage
+        $set: {
+          title: blogTitle,
+          body: blogBody,
+        },
       }
     );
-
-    res.status(200).json(result);
+    res.status(200).json({ message: "Blog update!", metaData: blogPost });
   } catch (error) {
     console.log(error);
     res.json({ error });

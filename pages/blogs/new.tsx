@@ -52,12 +52,12 @@ const NewBlog = () => {
   return (
     <>
       <div className="flex flex-col min-h-[80vh] text-center mt-4 w-9/12 mx-auto">
-        <h1 className="text-4xl font-semibold">Publish a new Article</h1>
+        <h1 className="text-4xl font-semibold">Publish a new Blog</h1>
         <form className=" bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative gap-2">
           <input
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             type="text"
-            placeholder="Article Title"
+            placeholder="Blog Title"
             value={newPost.title}
             onChange={handleTitle}
           />
@@ -65,7 +65,7 @@ const NewBlog = () => {
           <textarea
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
             rows={8}
-            placeholder="Write your article (in markdown)"
+            placeholder="Write your blog (in markdown)"
             value={newPost.body}
             onChange={handleBody}
           />
@@ -76,7 +76,7 @@ const NewBlog = () => {
             disabled={isLoading}
             onClick={handleSubmit}
           >
-            Publish Article
+            Publish Blog
           </button>
         </form>
       </div>

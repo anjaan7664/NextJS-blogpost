@@ -7,7 +7,7 @@ export const BlogSchema = new mongoose.Schema(
     body: String,
     authorId: String,
     slug: String,
-    approved: { type: Boolean, default: true },
+    status: { type: String, default: 'pending' },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
   },

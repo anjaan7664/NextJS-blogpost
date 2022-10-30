@@ -35,8 +35,8 @@ export default async function handler(
     const queryPage = parseInt(req.query.page as string);
     const result = await User.paginate({},
       {
-        page: 1,
-        limit: 5
+        page: queryPage,
+        limit: queryPerPage
       }
     );
 

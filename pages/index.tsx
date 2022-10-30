@@ -3,8 +3,9 @@ import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { BlogList } from "@/types/blogData.types";
-import Article from "@/components/article";
-import { Pagination, Stack } from "@mui/material";
+
+import Pagination from "@/components/helpers/Pagination";
+import Blog from "@/components/blog";
 const Home: React.FC = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(
@@ -19,6 +20,7 @@ const Home: React.FC = () => {
         params: {
           page: pageNum,
           perPage: 10,
+          status: "approved",
         },
       })
       .then((response) => {
@@ -26,12 +28,13 @@ const Home: React.FC = () => {
         setLoading(false);
       });
   }, [pageNum]);
-  const onPageChange = (event: React.ChangeEvent<unknown>, pageNum: number) => {
-    setPageNum(pageNum);
-  };
-  console.log(data);
+
   if (isLoading) return <p>Loading...</p>;
-  if (!data) return <p>No profile data</p>;
+  if (!data) return <p>No data</p>;
+
+  const paginateFront = () => setPageNum(data.page + 1);
+  const paginateBack = () => setPageNum(data.page - 1);
+
   return (
     <>
       <Head>
@@ -42,24 +45,21 @@ const Home: React.FC = () => {
         />
       </Head>
       <div className="flex text-center flex-col mt-4">
-        <h1 className="text-3xl font-bold">Global Articles</h1>
+        <h1 className="text-3xl font-bold">Global Blogs</h1>
         <div className="flex flex-col text-left">
           {data.docs.map((blog) => {
-            return <Article key={blog._id} blog={blog} />;
+            return <Blog key={blog._id} blog={blog} />;
           })}
         </div>
-        <Stack spacing={2}>
-          <Pagination
-            page={data.page}
-            count={data.totalPages}
-            shape="rounded"
-            onChange={onPageChange}
-            className="mx-auto my-2"
-            color="primary"
-            showFirstButton
-            showLastButton
-          />
-        </Stack>
+        <Pagination
+          postsPerPage={10}
+          totalPosts={data.totalDocs}
+          paginateBack={paginateBack}
+          paginateFront={paginateFront}
+          currentPage={data.page}
+          hasPrevPage={data.hasPrevPage}
+          hasNextPage={data.hasNextPage}
+        />
       </div>
     </>
   );

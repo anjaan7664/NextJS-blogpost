@@ -1,6 +1,5 @@
 import connectMongo from "@/utils/connectMongo";
 import Blog from "@/models/blog.model";
-
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -9,14 +8,11 @@ export default async function handler(
 ) {
   try {
     await connectMongo();
-    const blogSlug = req.query.slug;
-    console.log(blogSlug);
-    const singleBlog = await Blog.findOne({ "slug": blogSlug });
-    res.json(singleBlog);
-    res.end();
+    const blogId = req.body.blogId;
+    const data = await Blog.deleteOne({ _id: blogId });
+    res.status(200).json({ message: "Blog deleted!", metaData: data });
   } catch (error) {
     console.log(error);
     res.json({ error });
-    res.end();
   }
 }

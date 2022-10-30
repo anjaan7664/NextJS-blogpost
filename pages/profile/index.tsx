@@ -1,9 +1,19 @@
-import React from 'react'
-
+import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 const Profile = () => {
   return (
-    <div>Profile</div>
-  )
-}
+    <>
+      <a
+        href={`/api/auth/signout`}
+        onClick={(e) => {
+          e.preventDefault();
+          signOut();
+        }}
+      >
+        Sign out
+      </a>
+    </>
+  );
+};
 
-export default Profile
+export default Profile;

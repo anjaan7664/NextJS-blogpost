@@ -1,5 +1,5 @@
 import connectMongo from "@/utils/connectMongo";
-import User from "@/models/user.model";
+import Blog from "@/models/blog.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Cors from "cors";
 
@@ -31,27 +31,18 @@ export default async function handler(
   await runMiddleware(req, res, cors);
   try {
     await connectMongo();
-    const userId =  req.query.userId;
-    const userEmail = req.query.email;
-    const userName = req.query.name;
-
-    const blogPost = await User.updateOne(
-      { _id: userId },
+    const blogId =  req.body.id;
+    const status = req.body.status;
+    const blogPost = await Blog.updateOne(
+      { _id: blogId },
       {
         $set: {
-         email: userEmail,
-         name: userName
+         status: status,
         },
       }
     );
-    // const blogPost = new Blog({
-    //   title: blogTitle,
-    //   description: blogDescription,
-    //   authorName,
-    //   authorEmail,
-    // });
-    // await blogPost.save();
-    res.status(200).json({ message: "User updated!", metaData: blogPost });
+   
+    res.status(200).json({ message: "Post Status Updated!", metaData: blogPost });
   } catch (error) {
     console.log(error);
     res.json({ error });
