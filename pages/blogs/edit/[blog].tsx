@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { BlogInterface } from "@/types/blogData.types";
 
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 import axios from "axios";
-import Test from "@/components/helpers/Test";
 import BlogEdit from "@/components/helpers/BlogEdit";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const EditBlog = () => {
   const router = useRouter();
@@ -29,18 +32,33 @@ const EditBlog = () => {
       });
   }, [blogSlug]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (!blog) return <p>No data</p>;
 
   return (
     <>
       <div className="flex flex-col min-h-[80vh] text-center mt-4 w-9/12 mx-auto">
         <h1 className="text-4xl font-semibold">Edit this Blog</h1>
-
         <BlogEdit blog={blog} />
       </div>
     </>
   );
 };
 
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default EditBlog;

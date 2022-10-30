@@ -7,6 +7,7 @@ import Pagination from "@/components/helpers/Pagination";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 const Approve: React.FC = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(
@@ -31,7 +32,7 @@ const Approve: React.FC = () => {
       });
   }, [pageNum]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
   if (!data) return <p>No data</p>;
 
   const paginateFront = () => setPageNum(data.page + 1);

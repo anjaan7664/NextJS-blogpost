@@ -10,6 +10,7 @@ import { unstable_getServerSession } from "next-auth/next";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
+import LoadingSpinner from "@/components/LoadingSpinner";
 const Profile = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -35,7 +36,7 @@ const Profile = () => {
       });
   }, [pageNum, session?.user._id]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
   if (!data) return <p>No data</p>;
 
   const paginateFront = () => setPageNum(data.page + 1);

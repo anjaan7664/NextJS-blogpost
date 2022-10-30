@@ -6,6 +6,7 @@ import { BlogList } from "@/types/blogData.types";
 
 import Pagination from "@/components/helpers/Pagination";
 import Blog from "@/components/blog";
+import LoadingSpinner from "@/components/LoadingSpinner";
 const Home: React.FC = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(
@@ -29,7 +30,7 @@ const Home: React.FC = () => {
       });
   }, [pageNum]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
   if (!data) return <p>No data</p>;
 
   const paginateFront = () => setPageNum(data.page + 1);
@@ -44,7 +45,7 @@ const Home: React.FC = () => {
           content="Next.js blog post with admin control"
         />
       </Head>
-      <div className="flex text-center flex-col mt-4">
+      <div className="flex text-center flex-col mt-4 min-h-[78vh]">
         <h1 className="text-3xl font-bold">Global Blogs</h1>
         <div className="flex flex-col text-left">
           {data.docs.map((blog) => {

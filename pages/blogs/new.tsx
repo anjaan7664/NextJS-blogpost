@@ -3,7 +3,9 @@ import postReducer from "@/utils/postReducer";
 import { BlogActionType } from "@/utils/postReducer";
 import Router from "next/router";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
 const initialState = {
   title: "",
   body: "",
@@ -85,5 +87,20 @@ const NewBlog = () => {
     </>
   );
 };
-
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/login",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default NewBlog;

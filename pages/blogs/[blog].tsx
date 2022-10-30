@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import { BlogInterface } from "@/types/blogData.types";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 const Blog = () => {
   const { data: session } = useSession();
+  console.log(session)
   const router = useRouter();
   const blogSlug = router.query.blog;
   const [data, setData] = useState<BlogInterface>();
@@ -25,7 +27,7 @@ const Blog = () => {
       });
   }, [blogSlug]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <LoadingSpinner/>
   if (!data) return <p>No data</p>;
 
   const deleteBlog = async () => {
@@ -76,7 +78,7 @@ const Blog = () => {
             <p className="text-sm font-normal text-gray-600 md:text-base">
               Published on {newDate} by author
             </p>
-            {(session?.user.role === "admin" ||
+            {session && (session?.user.role === "admin" ||
               session?.user._id === data.authorId) && (
               <div className="text-sm flex mt-2">
                 <Link href={`/blogs/edit/${data.slug}`}>
