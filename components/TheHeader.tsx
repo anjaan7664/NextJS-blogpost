@@ -82,6 +82,11 @@ const TheHeader = () => {
               {session?.user && (
                 <>
                   <li className="text-white hover:text-indigo-200">
+                    <Link href="/">
+                      <a href="">Home</a>
+                    </Link>
+                  </li>
+                  <li className="text-white hover:text-indigo-200">
                     <Link href="/blogs/new">
                       <a href="">NewPost</a>
                     </Link>

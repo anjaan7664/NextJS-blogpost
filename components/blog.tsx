@@ -2,20 +2,37 @@ import { BlogInterface } from "@/types/blogData.types";
 import Link from "next/link";
 import React from "react";
 
-const Blog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
+const Blog: React.FC<{ blog: BlogInterface; status?: string }> = ({
+  blog,
+  status,
+}) => {
   let date = new Date(blog.createdAt);
   let newDate =
     date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
   return (
     <Link href={`/blogs/${blog.slug}`}>
       <a className="shadow-custom m-2 p-2">
-        <div className="flex flex-wrap py-8 border-b-2 md:flex-nowrap ">
+        <div className="flex flex-wrap my-4 border-b-2 md:flex-nowrap ">
           <div className="md:flex-grow">
+            {status && (
+              <p>
+                Status -{" "}
+                <span
+                  className={`${
+                    status === "pending" ? "text-yellow-600" : "text-green-600"
+                  }  px-2 rounded py-2`}
+                >
+                  {status}
+                </span>
+              </p>
+            )}
             <h2 className="mb-2 text-3xl font-medium text-gray-900 title-font">
               {blog.title}
             </h2>
             <p className="text-sm text-gray-400">By Author on {newDate}</p>
-            <p className="mt-2 leading-relaxed text-gray-500">{blog.body.substring(0,250)}...</p>
+            <p className="mt-2 leading-relaxed text-gray-500">
+              {blog.body.substring(0, 250)}...
+            </p>
             <p className="inline-flex items-center mt-4 text-indigo-500">
               Read More
               <svg

@@ -45,14 +45,12 @@ const Profile = () => {
 
   return (
     <>
-     
-
       <div className="flex text-center flex-col mt-6 min-h-[77vh]">
         <h1 className="text-3xl font-bold">My Posts</h1>
         {data.totalDocs === 0 && (
           <>
             <h1 className="text-4xl mt-8">
-              Add a new post please.  &nbsp;
+              Add a new post please. &nbsp;
               <Link href="/blogs/new">
                 <a className=" underline">Create Post</a>
               </Link>
@@ -66,13 +64,7 @@ const Profile = () => {
               <div className="flex flex-col text-left">
                 {data.docs.map((blog) => {
                   return (
-                    <div key={blog._id} className="border p-4">
-                      <div className="flex flex-row ">
-                        <p className="text-blue-400">Status</p>{" "}
-                        <p>{blog.status}</p>
-                      </div>
-                      <Blog blog={blog} />
-                    </div>
+                    <Blog key={blog._id} blog={blog} status={blog.status} />
                   );
                 })}
               </div>
