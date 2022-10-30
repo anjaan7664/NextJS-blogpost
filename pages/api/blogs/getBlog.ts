@@ -10,12 +10,10 @@ export default async function handler(
   try {
     await connectMongo();
     const blogSlug = req.query.slug;
-    console.log(blogSlug);
     const singleBlog = await Blog.findOne({ "slug": blogSlug });
     res.json(singleBlog);
     res.end();
   } catch (error) {
-    console.log(error);
     res.json({ error });
     res.end();
   }

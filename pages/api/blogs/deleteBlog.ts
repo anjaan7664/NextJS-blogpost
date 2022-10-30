@@ -18,7 +18,6 @@ export default async function handler(
       const data = await Blog.deleteOne({ _id: blogId });
       res.status(200).json({ message: "Blog deleted!", metaData: data });
     } catch (error) {
-      console.log(error);
       res.json({ error });
     }
   }

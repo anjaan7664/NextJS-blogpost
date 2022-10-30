@@ -16,11 +16,9 @@ export default async function handler(
       await connectMongo();
       const userId = req.query.userId;
       const userInfo = await User.findOne({ id: userId });
-      console.log(userInfo);
       res.json(userInfo);
       res.end();
     } catch (error) {
-      console.log(error);
       res.json({ error });
       res.end();
     }

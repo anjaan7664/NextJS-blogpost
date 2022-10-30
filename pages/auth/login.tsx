@@ -26,7 +26,6 @@ const LoginFormComponent = () => {
       password: enteredPassword,
     });
     if (!result?.error) {
-      // set some auth state
       router.replace("/");
     } else {
       setErrors(result.error);

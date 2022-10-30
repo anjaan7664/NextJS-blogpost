@@ -6,41 +6,13 @@ import Link from "next/link";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 
-async function createUser(email: string, password: string) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [errors, setErrors] = useState({});
-
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
-    {
-      email: email,
-      password: password,
-    }
-  );
-  const data = await response.data;
-  if (response.status !== 200) {
-    throw new Error(data.message || "Something went wrong!");
-  } else {
-    const result = await signIn("credentials", {
-      redirect: false,
-      username: email,
-      password: password,
-    });
-    if (!result?.error) {
-      // set some auth state
-      Router.replace("/");
-    } else {
-      setErrors(result.error);
-    }
-  }
-}
-
 function AuthForm() {
   const router = useRouter();
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const [errors, setErrors] = useState({});
+  const [temp, setTemp] = useState(false);
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -59,20 +31,20 @@ function AuthForm() {
     if (response.status !== 200) {
       setErrors(data.message);
     } else {
-      const result = await signIn("credentials", {
-        redirect: false,
-        username: enteredEmail,
-        password: enteredPassword,
-      });
-      if (!result?.error) {
-        // set some auth state
-        router.replace("/");
-      } else {
-        setErrors(result.error);
-      }
+      setTemp(true);
     }
   };
-
+  if (temp) {
+    const enteredEmail = emailInputRef.current?.value;
+    const enteredPassword = passwordInputRef.current?.value;
+    const result = signIn("credentials", {
+      redirect: false,
+      email: enteredEmail,
+      password: enteredPassword,
+    }).then((res) => {
+      router.replace("/");
+    });
+  }
   return (
     <section className="">
       <div className="min-h-[78vh] ">

@@ -35,7 +35,6 @@ export default async function handler(
       await blogPost.save();
       res.status(200).json({ message: "Blog created!", blogData: blogPost });
     } catch (error) {
-      console.log(error);
       res.json({ error });
     }
   }

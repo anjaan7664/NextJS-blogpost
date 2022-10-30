@@ -18,7 +18,6 @@ export default async function handler(
 
     res.status(200).json({ message: "User updated!", metaData: blogPost });
   } catch (error) {
-    console.log(error);
     res.json({ error });
   }}
 }

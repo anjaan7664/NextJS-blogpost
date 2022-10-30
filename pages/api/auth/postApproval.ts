@@ -28,7 +28,6 @@ export default async function handler(
         .status(200)
         .json({ message: "Post Status Updated!", metaData: blogPost });
     } catch (error) {
-      console.log(error);
       res.json({ error });
     }
   }

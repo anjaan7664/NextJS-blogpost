@@ -16,7 +16,6 @@ export default async function handler(
       const data = await User.deleteOne({ _id: userId });
       res.status(200).json({ message: "User deleted!", metaData: data });
     } catch (error) {
-      console.log(error);
       res.json({ error });
     }
   }

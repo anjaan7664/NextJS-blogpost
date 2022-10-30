@@ -11,6 +11,7 @@ import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import Link from "next/link";
 const Profile = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -36,7 +37,7 @@ const Profile = () => {
       });
   }, [pageNum, session?.user._id]);
 
-  if (isLoading) return <LoadingSpinner/>
+  if (isLoading) return <LoadingSpinner />;
   if (!data) return <p>No data</p>;
 
   const paginateFront = () => setPageNum(data.page + 1);
@@ -44,20 +45,19 @@ const Profile = () => {
 
   return (
     <>
-      <a
-        href={`/api/auth/signout`}
-        onClick={(e) => {
-          e.preventDefault();
-          signOut();
-        }}
-      >
-        Sign out
-      </a>
+     
 
       <div className="flex text-center flex-col mt-6 min-h-[77vh]">
         <h1 className="text-3xl font-bold">My Posts</h1>
         {data.totalDocs === 0 && (
-          <h1 className="text-4xl mt-8">Add a new post please.</h1>
+          <>
+            <h1 className="text-4xl mt-8">
+              Add a new post please.  &nbsp;
+              <Link href="/blogs/new">
+                <a className=" underline">Create Post</a>
+              </Link>
+            </h1>
+          </>
         )}
         {data.totalDocs !== 0 && (
           <>
