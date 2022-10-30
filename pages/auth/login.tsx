@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 const LoginFormComponent = () => {
-  const usernameInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState({});
@@ -12,17 +13,17 @@ const LoginFormComponent = () => {
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const enteredUsername = usernameInputRef.current?.value;
+    const enteredEmail = emailInputRef.current?.value;
     const enteredPassword = passwordInputRef.current?.value;
 
     // optional: Add validation
 
     const result = await signIn("credentials", {
       redirect: false,
-      username: enteredUsername,
+      email: enteredEmail,
       password: enteredPassword,
     });
-
+console.log(result);
     if (!result?.error) {
       // set some auth state
       router.replace("/");
@@ -31,10 +32,9 @@ const LoginFormComponent = () => {
     }
   }
 
-
   return (
-    <React.Fragment>
-      <div className="z-50 w-full max-w-md p-6 m-4 mx-auto bg-white rounded-lg shadow-lg">
+    <div className="min-h-[78vh] ">
+      <div className="z-50 w-full max-w-md p-6 m-4 mx-auto bg-white rounded-lg border">
         <div>
           <h2 className="mt-6 text-3xl font-extrabold leading-9 text-center text-gray-900">
             Sign in to Account
@@ -42,22 +42,18 @@ const LoginFormComponent = () => {
         </div>
         <form className="mt-8" onSubmit={submitHandler}>
           <input type="hidden" name="remember" value="true" />
-          <div>
-            <div className="mb-3">
+          <fieldset>
+         
               <input
                 aria-label="Email"
                 name="email"
                 type="email"
                 id="email"
-                ref={usernameInputRef}
-                className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
+                ref={emailInputRef}
+                className="mb-3 relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
                 placeholder="Email"
               />
-              {errors.hasOwnProperty("email") && (
-                <p className="text-xs italic text-red-500">{errors.email}</p>
-              )}
-            </div>
-            <div>
+          
               <input
                 id="password"
                 aria-label="Password"
@@ -67,13 +63,9 @@ const LoginFormComponent = () => {
                 className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"
                 placeholder="Password"
               />
-              {errors.hasOwnProperty("username") && (
-                <p className="text-xs italic text-red-500">{errors.password}</p>
-              )}
-            </div>
-          </div>
+          </fieldset>
 
-          <div className="flex items-center justify-between mt-6">
+          <fieldset className="flex items-center mt-6 ml-1 justify-between">
             <div className="flex items-center">
               <input
                 v-model="form.remember"
@@ -83,7 +75,7 @@ const LoginFormComponent = () => {
               />
               <label className="block ml-2 text-sm leading-5 text-gray-900">
                 Remember me
-              </label>{" "}
+              </label>
               <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
             </div>
 
@@ -95,20 +87,25 @@ const LoginFormComponent = () => {
                 Forgot your password?
               </a>
             </div>
-          </div>
+          </fieldset>
 
-          <div className="mt-6">
+          <fieldset className="mt-6 flex flex-row justify-between">
             <button
               type="submit"
-              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md group focus:shadow-outline-indigo hover:bg-indigo-500 focus:border-indigo-700 focus:outline-none active:bg-indigo-700"
+              className="w-2/5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             >
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
+            
               Sign in
             </button>
-          </div>
+            <Link href="/auth/register">
+              <a className="w-2/5 text-center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                Signup
+              </a>
+            </Link>
+          </fieldset>
         </form>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

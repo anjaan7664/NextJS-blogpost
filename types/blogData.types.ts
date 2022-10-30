@@ -14,8 +14,8 @@ export interface BlogList {
 export type BlogInterface = {
   _id: string;
   title: string;
-  description: string;
   body:string;
+  slug: string;
   approved: boolean;
   authorId: string;
   createdAt: Date;

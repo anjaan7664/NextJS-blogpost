@@ -1,6 +1,5 @@
 export const enum BlogActionType {
     SET_TITLE = 'SET_TITLE',
-    SET_DESCRIPTION = 'SET_DESCRIPTION',
     SET_BODY = 'SET_BODY',
   }
   interface BlogAction {
@@ -9,7 +8,6 @@ export const enum BlogActionType {
   }
   interface BlogState{
     title:string,
-    description:string,
     body:string
   }
 const postReducer = (state:BlogState, action:BlogAction) => {
@@ -19,11 +17,7 @@ const postReducer = (state:BlogState, action:BlogAction) => {
             ...state,
             title: action.payload
           };
-        case "SET_DESCRIPTION":
-          return {
-            ...state,
-            description: action.payload
-          };
+     
         case "SET_BODY":
           return {
             ...state,

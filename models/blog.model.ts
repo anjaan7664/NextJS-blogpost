@@ -4,9 +4,9 @@ import { BlogInterface } from "@/types/blogData.types";
 export const BlogSchema = new mongoose.Schema(
   {
     title: String,
-    description: String,
     body: String,
     authorId: String,
+    slug: String,
     approved: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },

@@ -15,6 +15,8 @@ export type UserInterface = {
   _id: string;
   name: string;
   email: string;
+  username:string;
+  bio:string;
   role: string;
   createdAt: Date;
 };

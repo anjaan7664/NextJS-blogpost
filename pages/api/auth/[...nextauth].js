@@ -11,12 +11,12 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Username", type: "text", required: true },
+        email: { label: "Email", type: "text", required: true },
         password: { label: "Password", type: "password", required: true },
       },
       async authorize(credentials) {
         await connectMongo();
-        const email = credentials?.email.toLowerCase();
+        const email = credentials?.email;
         const password = credentials?.password;
         const user = await User.findOne({
           email: email,

@@ -33,10 +33,11 @@ export default async function handler(
     await connectMongo();
     const queryPerPage = parseInt(req.query.perPage as string);
     const queryPage = parseInt(req.query.page as string);
-    const result = await Blog.paginate({},
+    const approval = req.query.approval || true;
+    const result = await Blog.paginate({"approved": approval},
       {
-        page: 1,
-        limit: 5
+        page: queryPage,
+        limit: queryPerPage
       }
     );
 

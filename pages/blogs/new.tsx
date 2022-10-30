@@ -2,9 +2,9 @@ import React, { ButtonHTMLAttributes, useReducer } from "react";
 import postReducer from "@/utils/postReducer";
 import { BlogActionType } from "@/utils/postReducer";
 import Router from "next/router";
+import axios from "axios";
 const initialState = {
   title: "",
-  description: "",
   body: "",
 };
 
@@ -19,12 +19,6 @@ const NewBlog = () => {
       payload: event.currentTarget.value,
     });
 
-  const handleDescription = (event: React.FormEvent<HTMLInputElement>) =>
-    dispatch({
-      type: BlogActionType.SET_DESCRIPTION,
-      payload: event.currentTarget.value,
-    });
-
   const handleBody = (event: React.FormEvent<HTMLTextAreaElement>) =>
     dispatch({
       type: BlogActionType.SET_BODY,
@@ -34,64 +28,59 @@ const NewBlog = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setLoading(true);
-
-    // const { data, status } = await ArticleAPI.create(
-    //   posting,
-    //   currentUser?.token
-    // );
+    const { data, status } = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/create`,
+      null,
+      {
+        params: {
+          title: newPost.title,
+          body: newPost.body,
+          authoreId: 32434,
+        },
+      }
+    );
 
     setLoading(false);
 
-    // if (status !== 200) {
-    //   setErrors(data.errors);
-    // }
+    if (status !== 200) {
+      setErrors(data.errors);
+    }
 
     Router.push("/");
   };
 
   return (
-    <div className="editor-page">
-      <div className="container page">
-        <div className="row">
-          <div className="col-md-10 offset-md-1 col-xs-12">
-            <form>
-              <input
-                className="form-control form-control-lg"
-                type="text"
-                placeholder="Article Title"
-                value={newPost.title}
-                onChange={handleTitle}
-              />
+    <>
+      <div className="flex flex-col min-h-[80vh] text-center mt-4 w-9/12 mx-auto">
+        <h1 className="text-4xl font-semibold">Publish a new Article</h1>
+        <form className=" bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative gap-2">
+          <input
+            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            type="text"
+            placeholder="Article Title"
+            value={newPost.title}
+            onChange={handleTitle}
+          />
 
-              <input
-                className="form-control"
-                type="text"
-                placeholder="What's this article about?"
-                value={newPost.description}
-                onChange={handleDescription}
-              />
+          <textarea
+            className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+            rows={8}
+            placeholder="Write your article (in markdown)"
+            value={newPost.body}
+            onChange={handleBody}
+          />
 
-              <textarea
-                className="form-control"
-                rows={8}
-                placeholder="Write your article (in markdown)"
-                value={newPost.body}
-                onChange={handleBody}
-              />
-
-              <button
-                className="btn btn-lg pull-xs-right btn-primary"
-                type="button"
-                disabled={isLoading}
-                onClick={handleSubmit}
-              >
-                Publish Article
-              </button>
-            </form>
-          </div>
-        </div>
+          <button
+            className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"
+            type="button"
+            disabled={isLoading}
+            onClick={handleSubmit}
+          >
+            Publish Article
+          </button>
+        </form>
       </div>
-    </div>
+    </>
   );
 };
 

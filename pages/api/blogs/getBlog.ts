@@ -9,9 +9,9 @@ export default async function handler(
 ) {
   try {
     await connectMongo();
-    const blogId = req.query.blog;
-    const singleBlog = await Blog.findOne({ "id": blogId });
-    console.log(singleBlog);
+    const articleSlug = req.query.slug;
+    console.log(articleSlug);
+    const singleBlog = await Blog.findOne({ "slug": articleSlug });
     res.json(singleBlog);
     res.end();
   } catch (error) {

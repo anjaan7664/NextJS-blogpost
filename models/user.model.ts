@@ -5,9 +5,10 @@ import paginate from "mongoose-paginate-v2";
 import { UserInterface } from "@/types/userData.types";
 export const UserSchema = new mongoose.Schema({
   name: String,
+  username: String,
   email: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   password: String,
-  picture: String,
+  bio:String,
   email_verified: Boolean,
   createdAt: {type: Date, default: Date.now},
   updatedAt: {type: Date, default: Date.now},
