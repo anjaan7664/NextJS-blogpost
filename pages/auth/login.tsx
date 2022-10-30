@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Session } from "next-auth";
+import { GetServerSideProps } from "next";
 const LoginFormComponent = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
@@ -105,5 +107,20 @@ const LoginFormComponent = () => {
     </div>
   );
 };
-
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/profile",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default LoginFormComponent;

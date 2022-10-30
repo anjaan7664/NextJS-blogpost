@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 import { BlogList } from "@/types/blogData.types";
 import PostApproval from "@/components/helpers/PostApproval";
 import Pagination from "@/components/helpers/Pagination";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
 const Approve: React.FC = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(
@@ -85,5 +88,28 @@ const Approve: React.FC = () => {
     </>
   );
 };
-
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  if (session.user.role !== 'admin') {
+    return {
+      redirect: {
+        destination: "/profile",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default Approve;

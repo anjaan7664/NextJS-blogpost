@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 import { UserList } from "@/types/userData.types";
 import AllUsers from "@/components/user/AllUsers";
 import Pagination from "@/components/helpers/Pagination";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
+import { getSession } from "next-auth/react";
 const Users = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(
@@ -74,5 +77,28 @@ const Users = () => {
     </>
   );
 };
-
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  if (session.user.role !== 'admin') {
+    return {
+      redirect: {
+        destination: "/profile",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default Users;

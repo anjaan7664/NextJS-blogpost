@@ -3,12 +3,14 @@ import postReducer from "@/utils/postReducer";
 import { BlogActionType } from "@/utils/postReducer";
 import Router from "next/router";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 const initialState = {
   title: "",
   body: "",
 };
 
 const NewBlog = () => {
+  const {data:session,status} = useSession();
   const [isLoading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState([]);
   const [newPost, dispatch] = useReducer(postReducer, initialState);
@@ -35,7 +37,7 @@ const NewBlog = () => {
         params: {
           title: newPost.title,
           body: newPost.body,
-          authoreId: 32434,
+          authorId: session?.user._id,
         },
       }
     );

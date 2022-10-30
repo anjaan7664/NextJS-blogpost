@@ -1,19 +1,25 @@
-
-
 import mongoose, { model, PaginateModel } from "mongoose";
 import paginate from "mongoose-paginate-v2";
 import { UserInterface } from "@/types/userData.types";
-export const UserSchema = new mongoose.Schema({
-  name: {type:String},
-  username: String,
-  email: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
-  password: String,
-  bio:String,
-  email_verified: Boolean,
-  createdAt: {type: Date, default: Date.now},
-  updatedAt: {type: Date, default: Date.now},
-  role: {type: String, default: 'user'},
-}, {collection: 'users'});
+export const UserSchema = new mongoose.Schema(
+  {
+
+    name: { type: String },
+    email: {
+      type: String,
+      lowercase: true,
+      required: [true, "can't be blank"],
+      match: [/\S+@\S+\.\S+/, "is invalid"],
+      index: true,
+    },
+    password: String,
+    email_verified: Boolean,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+    role: { type: String, default: "user" },
+  },
+  { collection: "users" }
+);
 
 UserSchema.plugin(paginate);
 

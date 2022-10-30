@@ -17,7 +17,7 @@ export default NextAuth({
       async authorize(credentials) {
         await connectMongo();
         const email = credentials?.email;
-        const password = credentials?.password;
+        const password = credentials?.password ;
         const user = await User.findOne({
           email: email,
         });
@@ -33,10 +33,15 @@ export default NextAuth({
         return user;
       },
     }),
-
   ],
   callbacks: {
+    async jwt({ token, user }) {
+      user && (token.user = user);
+      return token;
+    },
     session({ session, token, user }) {
+      session.user.role = token.user.role;
+      session.user._id = token.user._id;
       return session; // The return type will match the one returned in `useSession()`
     },
   },

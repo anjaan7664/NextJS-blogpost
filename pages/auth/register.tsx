@@ -1,10 +1,15 @@
 import { useState, useRef } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+import { getSession, signIn } from "next-auth/react";
+import Router, { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
 
 async function createUser(email: string, password: string) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [errors, setErrors] = useState({});
+
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
     {
@@ -16,11 +21,17 @@ async function createUser(email: string, password: string) {
   if (response.status !== 200) {
     throw new Error(data.message || "Something went wrong!");
   } else {
-    signIn("credentials", {
-      redirect: true,
+    const result = await signIn("credentials", {
+      redirect: false,
       username: email,
       password: password,
     });
+    if (!result?.error) {
+      // set some auth state
+      Router.replace("/");
+    } else {
+      setErrors(result.error);
+    }
   }
 }
 
@@ -124,5 +135,20 @@ function AuthForm() {
     </section>
   );
 }
-
+export const getServerSideProps: GetServerSideProps<{
+  session: Session | null;
+}> = async (context) => {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: "/profile",
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+};
 export default AuthForm;

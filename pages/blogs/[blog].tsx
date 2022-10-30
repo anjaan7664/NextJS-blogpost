@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BlogInterface } from "@/types/blogData.types";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 const Blog = () => {
+  const { data: session } = useSession();
   const router = useRouter();
   const blogSlug = router.query.blog;
   const [data, setData] = useState<BlogInterface>();
@@ -74,7 +76,8 @@ const Blog = () => {
             <p className="text-sm font-normal text-gray-600 md:text-base">
               Published on {newDate} by author
             </p>
-            {true && (
+            {(session?.user.role === "admin" ||
+              session?.user._id === data.authorId) && (
               <div className="text-sm flex mt-2">
                 <Link href={`/blogs/edit/${data.slug}`}>
                   <a className="text-center bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded">
@@ -82,7 +85,7 @@ const Blog = () => {
                   </a>
                 </Link>
                 <button
-                 className=" bg-red-500 ml-2 hover:bg-red-700 text-white font-bold py-1 px-2 border border-blue-700 rounded"
+                  className=" bg-red-500 ml-2 hover:bg-red-700 text-white font-bold py-1 px-2 border border-blue-700 rounded"
                   onClick={deleteBlog}
                 >
                   Delete This Blog

@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, useReducer } from "react";
 import postReducer from "@/utils/postReducer";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 import { BlogActionType } from "@/utils/postReducer";
 import Router from "next/router";
 import axios from "axios";
@@ -10,7 +10,7 @@ const initialState = {
 };
 
 const Setting = () => {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   const [isLoading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState([]);
   const [newPost, dispatch] = useReducer(postReducer, initialState);
@@ -20,12 +20,12 @@ const Setting = () => {
       payload: event.currentTarget.value,
     });
 
-    const handleEmail = (event: React.FormEvent<HTMLInputElement>) =>
+  const handleEmail = (event: React.FormEvent<HTMLInputElement>) =>
     dispatch({
       type: BlogActionType.SET_BODY,
       payload: event.currentTarget.value,
-    });  
-    const handlePassword = (event: React.FormEvent<HTMLInputElement>) =>
+    });
+  const handlePassword = (event: React.FormEvent<HTMLInputElement>) =>
     dispatch({
       type: BlogActionType.SET_BODY,
       payload: event.currentTarget.value,
@@ -67,14 +67,14 @@ const Setting = () => {
             value={newPost.title}
             onChange={handleTitle}
           />
-   <input
+          <input
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             type="text"
             placeholder="Your Email"
             value={newPost.title}
             onChange={handleEmail}
           />
-   <input
+          <input
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             type="text"
             placeholder="Your Password"
@@ -82,14 +82,13 @@ const Setting = () => {
             onChange={handlePassword}
           />
 
-          
           <button
             className="text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg mt-2"
             type="button"
             disabled={isLoading}
             onClick={handleSubmit}
           >
-         Update Info
+            Update Info
           </button>
         </form>
       </div>

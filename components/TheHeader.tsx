@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const TheHeader = () => {
   const { data: session, status } = useSession();
+  console.log(session);
   const [navbar, setNavbar] = useState(false);
   return (
     <nav className="w-full bg-[#141215] shadow">
@@ -91,11 +92,13 @@ const TheHeader = () => {
                       <a href="">NewPost</a>
                     </Link>
                   </li>
-                  <li className="text-white hover:text-indigo-200">
-                    <Link href="/admin">
-                      <a href="">Admin</a>
-                    </Link>
-                  </li>
+                  {session.user.role === "admin" && (
+                    <li className="text-white hover:text-indigo-200">
+                      <Link href="/admin">
+                        <a href="">Admin</a>
+                      </Link>
+                    </li>
+                  )}
                   <li className="inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800">
                     <Link href="/profile">
                       <a className="">Profile</a>
