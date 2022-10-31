@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const NewBlog = () => {
-  const {data:session,status} = useSession();
+  const { data: session, status } = useSession();
   const [isLoading, setLoading] = React.useState(false);
   const [errors, setErrors] = React.useState([]);
   const [newPost, dispatch] = useReducer(postReducer, initialState);
@@ -40,6 +40,7 @@ const NewBlog = () => {
           title: newPost.title,
           body: newPost.body,
           authorId: session?.user._id,
+          authorName: session?.user.name,
         },
       }
     );

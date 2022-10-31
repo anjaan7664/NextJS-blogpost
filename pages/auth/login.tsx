@@ -8,7 +8,7 @@ const LoginFormComponent = () => {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
 
   const router = useRouter();
 
@@ -28,7 +28,8 @@ const LoginFormComponent = () => {
     if (!result?.error) {
       router.replace("/");
     } else {
-      setErrors(result.error);
+      setErrors(result.error as string);
+      console.log(result.error);
     }
   }
 
@@ -42,6 +43,9 @@ const LoginFormComponent = () => {
         </div>
         <form className="mt-8" onSubmit={submitHandler}>
           <input type="hidden" name="remember" value="true" />
+          {errors && (
+            <p className="text-lg  text-red-500 mx-auto">{errors}</p>
+          )}
           <fieldset>
             <input
               aria-label="Email"

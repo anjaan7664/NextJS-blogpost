@@ -1,18 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { BlogList } from "@/types/blogData.types";
-import PostApproval from "@/components/helpers/PostApproval";
+import PostApproval from "@/components/admin/PostTable";
 import Pagination from "@/components/helpers/Pagination";
-import { GetServerSideProps } from "next";
-import { Session } from "next-auth";
-import { getSession } from "next-auth/react";
 import LoadingSpinner from "@/components/LoadingSpinner";
-const Approve: React.FC = () => {
-  const router = useRouter();
-  const [pageNum, setPageNum] = useState<number>(
-    router.query.page ? parseInt(router.query.page as string) : 1
-  );
+import PostTable from "@/components/admin/PostTable";
+const PostApprove: React.FC = () => {
+  const [pageNum, setPageNum] = useState<number>(1);
   const [data, setData] = useState<BlogList>();
   const [isLoading, setLoading] = useState(false);
 
@@ -32,9 +26,8 @@ const Approve: React.FC = () => {
       });
   }, [pageNum]);
 
-  if (isLoading) return <LoadingSpinner/>
+  if (isLoading) return <LoadingSpinner />;
   if (!data) return <p>No data</p>;
-
   const paginateFront = () => setPageNum(data.page + 1);
   const paginateBack = () => setPageNum(data.page - 1);
 
@@ -46,9 +39,9 @@ const Approve: React.FC = () => {
   return (
     <>
       <div className="flex text-center flex-col mt-6 min-h-[77vh]">
-        <h1 className="text-3xl font-bold">Post Approvel</h1>
+        <h1 className="text-3xl font-bold">Approve Posts</h1>
         {data.totalDocs === 0 && (
-          <h1 className="text-4xl mt-8">No posts to approve</h1>
+          <h1 className="text-4xl mt-8">No posts to Post</h1>
         )}
         {data.totalDocs !== 0 && (
           <>
@@ -64,7 +57,7 @@ const Approve: React.FC = () => {
                 <tbody>
                   {data.docs.map((blog) => {
                     return (
-                      <PostApproval
+                      <PostTable
                         blog={blog}
                         key={blog._id}
                         handleDelete={handleDelete}
@@ -89,28 +82,4 @@ const Approve: React.FC = () => {
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps<{
-  session: Session | null;
-}> = async (context) => {
-  const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  if (session.user.role !== 'admin') {
-    return {
-      redirect: {
-        destination: "/profile",
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: { session },
-  };
-};
-export default Approve;
+export default PostApprove;

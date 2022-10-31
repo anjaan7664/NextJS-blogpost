@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { UserList } from "@/types/userData.types";
 import AllUsers from "@/components/user/AllUsers";
 import Pagination from "@/components/helpers/Pagination";
@@ -8,11 +7,8 @@ import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import LoadingSpinner from "@/components/LoadingSpinner";
-const Users = () => {
-  const router = useRouter();
-  const [pageNum, setPageNum] = useState<number>(
-    router.query.page ? parseInt(router.query.page as string) : 1
-  );
+const UsersAdmin = () => {
+  const [pageNum, setPageNum] = useState<number>(1);
   const [data, setData] = useState<UserList>();
   const [isLoading, setLoading] = useState(false);
 
@@ -31,17 +27,16 @@ const Users = () => {
       });
   }, [pageNum]);
 
-
-  if (isLoading) return <LoadingSpinner/>
+  if (isLoading) return <LoadingSpinner />;
   if (!data) return <p>No data</p>;
 
   const paginateFront = () => setPageNum(data.page + 1);
   const paginateBack = () => setPageNum(data.page - 1);
 
-  const removeUser = (id:string) =>{
+  const removeUser = (id: string) => {
     const newData = data.docs.filter((user) => user._id !== id);
     setData({ ...data, docs: newData });
-  }
+  };
   return (
     <>
       <div className="flex text-center flex-col mt-4">
@@ -59,7 +54,13 @@ const Users = () => {
             </thead>
             <tbody>
               {data.docs.map((user) => {
-                return <AllUsers key={user._id} user={user} removeUser={removeUser}/>;
+                return (
+                  <AllUsers
+                    key={user._id}
+                    user={user}
+                    removeUser={removeUser}
+                  />
+                );
               })}
             </tbody>
           </table>
@@ -73,7 +74,6 @@ const Users = () => {
           hasPrevPage={data.hasPrevPage}
           hasNextPage={data.hasNextPage}
         />
-       
       </div>
     </>
   );
@@ -90,7 +90,7 @@ export const getServerSideProps: GetServerSideProps<{
       },
     };
   }
-  if (session.user.role !== 'admin') {
+  if (session.user.role !== "admin") {
     return {
       redirect: {
         destination: "/profile",
@@ -102,4 +102,4 @@ export const getServerSideProps: GetServerSideProps<{
     props: { session },
   };
 };
-export default Users;
+export default UsersAdmin;

@@ -16,10 +16,14 @@ const Blog: React.FC<{ blog: BlogInterface; status?: string }> = ({
           <div className="md:flex-grow">
             {status && (
               <p>
-                Status -{" "}
+                Status -
                 <span
                   className={`${
-                    status === "pending" ? "text-yellow-600" : "text-green-600"
+                    status === "pending"
+                      ? "text-yellow-600"
+                      : status === "approved"
+                      ? "text-green-600"
+                      : "text-red-600"
                   }  px-2 rounded py-2`}
                 >
                   {status}
@@ -29,7 +33,7 @@ const Blog: React.FC<{ blog: BlogInterface; status?: string }> = ({
             <h2 className="mb-2 text-3xl font-medium text-gray-900 title-font">
               {blog.title}
             </h2>
-            <p className="text-sm text-gray-400">By Author on {newDate}</p>
+            <p className="text-sm text-gray-500">By <span className="font-semibold text-gray-700">{blog.authorName}</span> on {newDate}</p>
             <p className="mt-2 leading-relaxed text-gray-500">
               {blog.body.substring(0, 250)}...
             </p>

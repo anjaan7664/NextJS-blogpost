@@ -7,11 +7,12 @@ export default async function handler(
 ) {
   try {
     await connectMongo();
+    
     const queryPerPage = parseInt(req.query.perPage as string);
     const queryPage = parseInt(req.query.page as string);
-    const id = req.query.id;
+    const authorId = req.query.id as string;
     const result = await Blog.paginate(
-      { authorId: id },
+      {authorId: authorId},
       {
         page: queryPage,
         limit: queryPerPage,

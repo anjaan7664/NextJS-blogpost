@@ -53,7 +53,7 @@ const Blog = () => {
       <div className="container w-full auto min-h-[80vh]">
         <div className="w-full text-xl leading-normal text-gray-800 ">
           <div className="font-sans">
-            <div className="text-base font-bold text-green-500 md:text-sm">
+            <div className="text-base font-bold text-blue-500 md:text-sm">
               <Link href="/">
                 <p className="inline-flex items-center mt-4 text-base cursor-pointer">
                   <svg
@@ -75,7 +75,7 @@ const Blog = () => {
               {data.title}
             </h1>
             <p className="text-sm font-normal text-gray-600 md:text-base">
-              Published on {newDate} by author
+              Published on {newDate} by <span className="font-semibold text-gray-700">{data.authorName}</span>
             </p>
             {session &&
               (session?.user.role === "admin" ||

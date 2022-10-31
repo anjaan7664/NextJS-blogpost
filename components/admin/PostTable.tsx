@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";
 import { BlogInterface } from "@/types/blogData.types";
-const PostApproval: React.FC<{ blog: BlogInterface, handleDelete:Function}> = ({ blog, handleDelete }) => {
+const PostTable: React.FC<{ blog: BlogInterface, handleDelete:Function}> = ({ blog, handleDelete }) => {
   const approval = async (val: string) => {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/auth/postApproval`,
@@ -25,7 +25,7 @@ const PostApproval: React.FC<{ blog: BlogInterface, handleDelete:Function}> = ({
           <a className="underline">{blog.title}</a>
         </Link>
       </td>
-      <td className="py-4 px-6">{blog.authorId}</td>
+      <td className="py-4 px-6">{blog.authorName}</td>
 
       <td className="py-4 px-6">
         <button
@@ -50,4 +50,4 @@ const PostApproval: React.FC<{ blog: BlogInterface, handleDelete:Function}> = ({
   );
 };
 
-export default PostApproval;
+export default PostTable;

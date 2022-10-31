@@ -3,7 +3,6 @@ import connectMongo from "@/utils/connectMongo";
 import User from "@/models/user.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-
   const name = req.body.name as string;
   const email = req.body.email as string;
   const password = req.body.password as string;
@@ -13,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const existingUser = await User.findOne({ email });
 
   if (existingUser) {
-    res.status(422).json({ message: "User exists already!" });
+    res.status(422).json({ message: "User Exists" });
     return;
   }
 

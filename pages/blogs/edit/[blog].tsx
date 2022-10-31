@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps<{
   session: Session | null;
 }> = async (context) => {
   const session = await getSession(context);
-  if (session) {
+  if (!session) {
     return {
       redirect: {
         destination: "/",

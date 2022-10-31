@@ -11,7 +11,7 @@ function AuthForm() {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState();
   const [temp, setTemp] = useState(false);
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -19,20 +19,18 @@ function AuthForm() {
     const enteredEmail = emailInputRef.current?.value;
     const enteredPassword = passwordInputRef.current?.value;
     const enteredName = nameInputRef.current?.value;
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`,
-      {
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/signup`, {
         name: enteredName,
         email: enteredEmail,
         password: enteredPassword,
-      }
-    );
-    const data = await response.data;
-    if (response.status !== 200) {
-      setErrors(data.message);
-    } else {
-      setTemp(true);
-    }
+      })
+      .then(() => {
+        setTemp(true);
+      })
+      .catch((err) => {
+        setErrors(err.response.data.message);
+      });
   };
   if (temp) {
     const enteredEmail = emailInputRef.current?.value;
@@ -45,6 +43,7 @@ function AuthForm() {
       router.replace("/");
     });
   }
+  console.log(errors);
   return (
     <section className="">
       <div className="min-h-[78vh] ">
@@ -56,6 +55,9 @@ function AuthForm() {
           </div>
           <form className="mt-8" onSubmit={submitHandler}>
             <input type="hidden" name="remember" value="true" />
+            {errors && (
+              <p className="text-lg  text-red-500 mx-auto">{errors}</p>
+            )}
             <fieldset>
               <input
                 aria-label="Name"
@@ -80,6 +82,7 @@ function AuthForm() {
                 id="password"
                 aria-label="Password"
                 name="password"
+                minLength={6}
                 ref={passwordInputRef}
                 type="password"
                 className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:shadow-outline-blue focus:z-10 focus:border-blue-300 focus:outline-none sm:text-sm sm:leading-5"

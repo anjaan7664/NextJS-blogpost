@@ -17,6 +17,7 @@ export default async function handler(
       const blogTitle = req.query.title as string;
       const blogDescription = req.query.description;
       const authorId = req.query.authorId;
+      const authorName = req.query.authorName;
       const blogBody = req.query.body;
       let slug = blogTitle.replaceAll(" ", "-");
       const existingSlug = await Blog.findOne({ slug: slug });
@@ -30,7 +31,7 @@ export default async function handler(
         description: blogDescription,
         body: blogBody,
         slug,
-        authorId,
+        authorId: authorId, authorName: authorName ,
       });
       await blogPost.save();
       res.status(200).json({ message: "Blog created!", blogData: blogPost });

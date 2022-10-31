@@ -14,10 +14,11 @@ export interface BlogList {
 export type BlogInterface = {
   _id: string;
   title: string;
-  body:string;
+  body: string;
   slug: string;
   status: string;
   approved: boolean;
   authorId: string;
+  authorName: string;
   createdAt: Date;
 };

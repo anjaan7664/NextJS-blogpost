@@ -60,7 +60,6 @@ const Profile = () => {
         {data.totalDocs !== 0 && (
           <>
             <div className="flex text-center flex-col mt-4">
-              <h1 className="text-3xl font-bold">Global Blogs</h1>
               <div className="flex flex-col text-left">
                 {data.docs.map((blog) => {
                   return (
