@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Admin = () => {
-  const [showUser, setShowUser] = useState(true);
+  const [showUser, setShowUser] = useState(false);
   return (
     <>
       <div className="flex flex-col gap-4 mt-4 w-full">
