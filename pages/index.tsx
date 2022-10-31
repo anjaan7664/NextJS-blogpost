@@ -39,7 +39,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Blogpost</title>
+        <title>Blogposts</title>
         <meta
           name="description"
           content="Next.js blog post with admin control"
