@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { getSession, signIn } from "next-auth/react";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
 import { GetServerSideProps } from "next";
