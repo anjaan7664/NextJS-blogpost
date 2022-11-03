@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, useReducer } from "react";
-import postReducer from "@/utils/postReducer";
-import { BlogActionType } from "@/utils/postReducer";
+import postReducer from "@/utils/reducers/postReducer";
+import { BlogActionType } from "@/utils/reducers/postReducer";
 import Router from "next/router";
 import axios from "axios";
 import { getSession, useSession } from "next-auth/react";

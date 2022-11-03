@@ -1,45 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { BlogInterface } from "@/types/blogData.types";
-
-import { useRouter } from "next/router";
-
+import { PageInterface } from "@/types/pageType.types";
 import axios from "axios";
-import BlogEdit from "@/components/helpers/BlogEdit";
+
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import PageEdit from "../helpers/PageEdit";
 
-const EditBlog = () => {
-  const router = useRouter();
-  const [blog, setData] = useState<BlogInterface>();
+const PageDataEdit: React.FC<{ pageName: String }> = ({ pageName }) => {
+
+  const [pageData, setData] = useState<PageInterface>();
 
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
-  const blogSlug = router.query.blog;
+  
 
   useEffect(() => {
     setLoading(true);
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/getBlog`, null, {
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/pages`, null, {
         params: {
-          slug: blogSlug,
+          link_name: pageName,
         },
       })
       .then((response) => {
         setData(response.data);
         setLoading(false);
       });
-  }, [blogSlug]);
+  }, [pageName]);
 
   if (isLoading) return <LoadingSpinner />;
-  if (!blog) return <p>No data</p>;
-
+  if (!pageData) return <p>No data</p>;
+console.log(pageData)
   return (
     <>
       <div className="flex flex-col min-h-[80vh] text-center mt-4 w-9/12 mx-auto">
-        <h1 className="text-4xl font-semibold">Edit this Blog</h1>
-        <BlogEdit blog={blog} />
+        <h1 className="text-4xl font-semibold">Edit this Page</h1>
+        <PageEdit pageData={pageData} />
       </div>
     </>
   );
@@ -61,4 +59,4 @@ export const getServerSideProps: GetServerSideProps<{
     props: { session },
   };
 };
-export default EditBlog;
+export default PageDataEdit;

@@ -1,29 +1,32 @@
-import { BlogInterface } from "@/types/blogData.types";
-import postReducer from "@/utils/reducers/postReducer";
-import React, { useReducer, useState } from "react";
-import { BlogActionType } from "@/utils/reducers/postReducer";
-import axios from "axios";
-import Router, { useRouter } from "next/router";
 
-const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
+import React, { useReducer, useState } from "react";
+import { PageActionType } from "@/utils/reducers/pageReducer";
+import axios from "axios";
+import Router from "next/router";
+import { PageInterface } from "@/types/pageType.types";
+import pageReducer from "@/utils/reducers/pageReducer";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import dynamic from "next/dynamic";
+const PageEdit: React.FC<{ pageData: PageInterface }> = ({ pageData }) => {
   const initialState = {
-    title: blog.title,
-    body: blog.body,
+    title: pageData.title,
+    description: pageData.description,
   };
 
-  const [newPost, dispatch] = useReducer(postReducer, initialState);
+  const [newPost, dispatch] = useReducer(pageReducer, initialState);
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const handleTitle = (event: React.FormEvent<HTMLInputElement>) =>
     dispatch({
-      type: BlogActionType.SET_TITLE,
+      type: PageActionType.SET_TITLE,
       payload: event.currentTarget.value,
     });
 
-  const handleBody = (event: React.FormEvent<HTMLTextAreaElement>) =>
+  const handleBody = (val:string) =>
     dispatch({
-      type: BlogActionType.SET_BODY,
-      payload: event.currentTarget.value,
+      type: PageActionType.SET_DESCRIPTION,
+      payload: val,
     });
 
   const handleSubmit = async (event: React.FormEvent<HTMLButtonElement>) => {
@@ -31,13 +34,13 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
     setLoading(true);
 
     const { data, status } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/blogs/updateBlog`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/pages/update`,
       null,
       {
         params: {
-          blogId: blog._id,
+          link_name: pageData.link_name,
           title: newPost.title,
-          body: newPost.body,
+          description: newPost.description,
         },
       }
     );
@@ -50,25 +53,24 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
 
     Router.push("/");
   };
-
+  const Editor = dynamic(() => import("@/components/ckeditor"), { ssr: false });
   return (
     <div>
+      
       <form className=" bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative gap-2">
+       
         <input
           className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           type="text"
           placeholder="Blog Title"
           value={newPost.title}
           onChange={handleTitle}
-        />
-
-        <textarea
-          className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-          rows={8}
-          placeholder="Write your blog"
-          value={newPost.body}
-          onChange={handleBody}
-        />
+          />
+       
+        <Editor            
+        value={newPost.description}
+        onChange={(v) =>handleBody(v)}
+     />
 
         <button
           className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"
@@ -83,4 +85,4 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
   );
 };
 
-export default EditBlog;
+export default PageEdit;

@@ -9,44 +9,40 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Admin = () => {
-  const [showUser, setShowUser] = useState(false);
-  const [showPP, setPP] = useState(false)
+  const [pageName, setPageName] = useState("");
+
   return (
     <>
       <div className="flex flex-col gap-4 mt-4 w-full">
         <div className="flex flex-row w-full text-center justify-center gap-10">
           <button
-            onClick={() => setShowUser(true)}
-            className={`${
-              showUser
-                ? "bg-gray-500 hover:bg-gray-700"
-                : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold py-2 px-4 rounded`}
+            onClick={() => setPageName("privacy_policy")}
+            className={`bg-blue-500 hover:bg-blue-700            } text-white font-bold py-2 px-4 rounded`}
           >
-            All Users
+            Privacy Policy
           </button>
-     
+          <button
+            onClick={() => {
+              setPageName("about_us");
+            }}
+            className={`
+                bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+          >
+            About Us
+          </button>
 
           <button
-            onClick={() => setShowUser(false)}
-            className={`${
-              !showUser
-                ? "bg-gray-500 hover:bg-gray-700"
-                : "bg-blue-500 hover:bg-blue-700"
-            } text-white font-bold py-2 px-4 rounded`}
+            onClick={() => {
+              setPageName("terms_of_service");
+            }}
+            className={`
+                bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
           >
-            Approve Posts
+            Terms Of Service
           </button>
-          <Link href='/admin/page-edit'>
-            <a> Page Edit</a>
-          </Link>
-
         </div>
       </div>
-      <div>
-        {!showUser && <PostApprove />}
-        {showUser && <UsersAdmin />}
-      </div>
+      <div>{pageName && <PageDataEdit pageName={pageName} />}</div>
     </>
   );
 };
