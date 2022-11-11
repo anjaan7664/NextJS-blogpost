@@ -16,6 +16,7 @@ export type BlogInterface = {
   title: string;
   body: string;
   slug: string;
+  image: string;
   status: string;
   approved: boolean;
   authorId: string;

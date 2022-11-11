@@ -1,7 +1,7 @@
 import { BlogInterface } from "@/types/blogData.types";
 import Link from "next/link";
 import React from "react";
-
+import parse from 'html-react-parser';
 const Blog: React.FC<{ blog: BlogInterface; status?: string }> = ({
   blog,
   status,
@@ -35,7 +35,7 @@ const Blog: React.FC<{ blog: BlogInterface; status?: string }> = ({
             </h2>
             <p className="text-sm text-gray-500">By <span className="font-semibold text-gray-700">{blog.authorName}</span> on {newDate}</p>
             <p className="mt-2 leading-relaxed text-gray-500">
-              {blog.body.substring(0, 250)}...
+              {parse(blog.body)}
             </p>
             <p className="inline-flex items-center mt-4 text-indigo-500">
               Read More

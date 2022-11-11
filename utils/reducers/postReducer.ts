@@ -1,6 +1,7 @@
 export const enum BlogActionType {
     SET_TITLE = 'SET_TITLE',
     SET_BODY = 'SET_BODY',
+    
   }
   interface BlogAction {
     type: BlogActionType;
@@ -8,7 +9,8 @@ export const enum BlogActionType {
   }
   interface BlogState{
     title:string,
-    body:string
+    body:string,
+    image:string
   }
 const postReducer = (state:BlogState, action:BlogAction) => {
     switch (action.type) {

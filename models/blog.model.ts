@@ -8,6 +8,7 @@ export const BlogSchema = new mongoose.Schema(
     authorId: String,
     authorName: String,
     slug: String,
+    image: String,
     status: { type: String, default: "pending" },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
