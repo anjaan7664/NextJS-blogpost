@@ -41,7 +41,11 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
     event.preventDefault();
     setLoading(true);
     const formData = new FormData();
-    formData.append("image", file as File);
+    if(file){
+      formData.append("image", file as File);
+    }else{
+      formData.append("fileName", newPost.image)
+    }
     formData.append("blogId", blog._id);
     formData.append("title", newPost.title);
     formData.append("body", newPost.body);

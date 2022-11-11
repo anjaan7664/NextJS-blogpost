@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import formidable, { IncomingForm } from "formidable";
 import fs from "fs";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,6 +27,11 @@ export default async function handler(
           files: formidable.Files
         ) {
           const file = files.image as formidable.File;
+          let imageTitle = fields.filename
+          if (file) {
+            saveFile(file);
+            imageTitle =  file.originalFilename as string
+          }
           const blogId = fields.blogId;
           const blogTitle = fields.title;
           const blogBody = fields.body;
@@ -34,12 +40,12 @@ export default async function handler(
             {
               $set: {
                 title: blogTitle,
-                image: file.originalFilename,
+                image: imageTitle,
                 body: blogBody,
               },
             }
           );
-          saveFile(file);
+       
           res.status(200).json({ message: "Blog updated!" });
           res.end();
         }
