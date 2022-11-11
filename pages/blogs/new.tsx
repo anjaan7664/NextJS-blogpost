@@ -1,11 +1,4 @@
-import React, {
-  ButtonHTMLAttributes,
-  ChangeEvent,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
-
+import React, { useEffect, useReducer, useState } from "react";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import postReducer from "@/utils/reducers/postReducer";
@@ -16,9 +9,8 @@ import { getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import Image from "next/image";
-import "react-quill/dist/quill.snow.css";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import CKeditor from "@/components/CkEditor";
+import Editor from "@/components/DraftEditor";
+import { convertFromRaw, convertToRaw } from "draft-js";
 const initialState = {
   title: "",
   body: "",
@@ -51,11 +43,12 @@ const NewBlog = () => {
       payload: event.currentTarget.value,
     });
 
-  const handleBody = (val: string) =>
+  const handleBody = (val:string) => {
     dispatch({
       type: BlogActionType.SET_BODY,
       payload: val,
     });
+  };
 
   const handleSetImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -118,13 +111,7 @@ const NewBlog = () => {
             value={newPost.title}
             onChange={handleTitle}
           />
-       
-          <CKeditor
-            name="description"
-            value={newPost.body}
-            onChange={handleBody}
-            editorLoaded={editorLoaded}
-          />
+          <Editor value={newPost.body} onChange={handleBody} />
 
           <button
             className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"

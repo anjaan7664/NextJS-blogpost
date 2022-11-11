@@ -5,7 +5,7 @@ import { BlogActionType } from "@/utils/reducers/postReducer";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 import Image from "next/image";
-import CKeditor from "../CkEditor";
+import DraftEditor from "../DraftEditor";
 
 const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
   const initialState = {
@@ -24,11 +24,13 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
       payload: event.currentTarget.value,
     });
 
-  const handleBody = (event: React.FormEvent<HTMLTextAreaElement>) =>
+  const handleBody = (val: string) => {
     dispatch({
       type: BlogActionType.SET_BODY,
-      payload: event.currentTarget.value,
+      payload: val,
     });
+  };
+
   const handleSetImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -88,9 +90,8 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
           value={newPost.title}
           onChange={handleTitle}
         />
-        {/* <CKeditor   value='{newPost.body}'
-          onChange={handleBody} /> */}
 
+        <DraftEditor value={newPost.body} onChange={handleBody} />
         <button
           className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"
           type="button"

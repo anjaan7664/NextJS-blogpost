@@ -4,7 +4,7 @@ import axios from "axios";
 import Router from "next/router";
 import { PageInterface } from "@/types/pageType.types";
 import pageReducer from "@/utils/reducers/pageReducer";
-import CKeditor from "@/components/CkEditor";
+import DraftEditor from "../DraftEditor";
 const PageEdit: React.FC<{ pageData: PageInterface }> = ({ pageData }) => {
   const initialState = {
     title: pageData.title,
@@ -65,7 +65,8 @@ const PageEdit: React.FC<{ pageData: PageInterface }> = ({ pageData }) => {
           onChange={handleTitle}
         />
 
-        <CKeditor value={newPost.description} onChange={handleBody} />
+
+        <DraftEditor value={newPost.description} onChange={handleBody} />
         <button
           className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"
           type="button"
