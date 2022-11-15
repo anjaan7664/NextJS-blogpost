@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import connectMongo from "@/utils/connectMongo";
-import { verifyPassword } from "@/utils/auth";
-import User from "@/models/user.model";
+import connectMongo from "lib/utils/connectMongo";
+import { verifyPassword } from "lib/utils/auth";
+import User from "lib/models/user.model";
 
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,

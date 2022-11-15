@@ -1,5 +1,5 @@
-import connectMongo from "@/utils/connectMongo";
-import User from "@/models/user.model";
+import connectMongo from "lib/utils/connectMongo";
+import User from "lib/models/user.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react"
 export default async function handler(

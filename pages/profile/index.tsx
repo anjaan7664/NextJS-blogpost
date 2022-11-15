@@ -2,15 +2,15 @@ import axios from "axios";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { BlogList } from "@/types/blogData.types";
+import { BlogList } from "lib/types/blogData.types";
 
-import Pagination from "@/components/helpers/Pagination";
-import Blog from "@/components/blog";
+import Pagination from "@/components/common/Pagination";
+import Blog from "@/components/blog/BlogPeview";
 import { unstable_getServerSession } from "next-auth/next";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Link from "next/link";
 const Profile = () => {
   const { data: session, status } = useSession();

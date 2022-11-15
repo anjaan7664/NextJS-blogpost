@@ -11,10 +11,10 @@
         "pages/*"
       ],
       "@/utils/*": [
-        "utils/*"
+        "lib/utils/*"
       ],
       "@/types/*": [
-        "types/*"
+        "lib/types/*"
       ],
       "@/styles/*": [
         "styles/*"
@@ -29,7 +29,7 @@
         "services/*"
       ],
       "@/models/*": [
-        "models/*"
+        "lib/models/*"
       ],
       "@/public/*": [
         "public/*"
@@ -59,9 +59,9 @@
     "**/*.tsx",
     "pages/index.jsx",
     "components/helpers/FancyBox.jsx",
-    "pages/auth/login.jsx",
-    "pages/auth/register.jsx",
-    "types/design.model.js",
+    "pages/user/login.jsx",
+    "pages/user/register.jsx",
+    "lib/types/design.model.js",
     "pages/api/designs/index.ts"
 , "pages/api/auth/[...nextauth].js", "pages/api/auth/[...nextauth].js"  ],
   "exclude": [

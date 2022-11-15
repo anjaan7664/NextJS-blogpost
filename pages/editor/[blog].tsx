@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { BlogInterface } from "@/types/blogData.types";
+import { BlogInterface } from "lib/types/blogData.types";
 
 import { useRouter } from "next/router";
 
 import axios from "axios";
-import BlogEdit from "@/components/helpers/BlogEdit";
+import BlogEdit from "@/components/editor/BlogEdit";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const EditBlog = () => {
   const router = useRouter();

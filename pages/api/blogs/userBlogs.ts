@@ -1,5 +1,5 @@
-import connectMongo from "@/utils/connectMongo";
-import Blog from "@/models/blog.model";
+import connectMongo from "lib/utils/connectMongo";
+import Blog from "lib/models/blog.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(
   req: NextApiRequest,

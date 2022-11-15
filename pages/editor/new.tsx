@@ -1,16 +1,17 @@
 import React, { useEffect, useReducer, useState } from "react";
 
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import postReducer from "@/utils/reducers/postReducer";
-import { BlogActionType } from "@/utils/reducers/postReducer";
+import postReducer from "lib/utils/reducers/postReducer";
+import { BlogActionType } from "lib/utils/reducers/postReducer";
 import Router from "next/router";
 import axios from "axios";
 import { getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import Image from "next/image";
-import Editor from "@/components/DraftEditor";
-import { convertFromRaw, convertToRaw } from "draft-js";
+import dynamic from "next/dynamic";
+const RichEditor = dynamic(() => import("@/components/common/RichEditor"), {
+  ssr: false,
+});
 const initialState = {
   title: "",
   body: "",
@@ -43,7 +44,7 @@ const NewBlog = () => {
       payload: event.currentTarget.value,
     });
 
-  const handleBody = (val:string) => {
+  const handleBody = (val: string) => {
     dispatch({
       type: BlogActionType.SET_BODY,
       payload: val,
@@ -103,6 +104,7 @@ const NewBlog = () => {
             accept="*"
             className="p-1 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             onChange={handleSetImage}
+            required
           />
           <input
             className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -110,8 +112,9 @@ const NewBlog = () => {
             placeholder="Blog Title"
             value={newPost.title}
             onChange={handleTitle}
+            required
           />
-          <Editor value={newPost.body} onChange={handleBody} />
+          <RichEditor value={newPost.body} onChange={handleBody} />
 
           <button
             className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"

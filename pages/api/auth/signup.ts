@@ -1,6 +1,6 @@
-import { hashPassword } from "@/utils/auth";
-import connectMongo from "@/utils/connectMongo";
-import User from "@/models/user.model";
+import { hashPassword } from "lib/utils/auth";
+import connectMongo from "lib/utils/connectMongo";
+import User from "lib/models/user.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const name = req.body.name as string;

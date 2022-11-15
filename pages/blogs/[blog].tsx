@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { BlogInterface } from "@/types/blogData.types";
+import { BlogInterface } from "lib/types/blogData.types";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Image from "next/image";
 import parse from 'html-react-parser';
-
+import 'react-quill/dist/quill.snow.css';
 const Blog = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -111,7 +111,9 @@ const Blog = () => {
                 </div>
               )}
           </div>
-          <p className="py-6">{parse(data.body)}</p>
+          <div className="py-6">{parse(data.body)}</div>
+         
+          
         </div>
       </div>
     </div>

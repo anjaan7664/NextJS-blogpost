@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { UserList } from "@/types/userData.types";
+import { UserList } from "lib/types/userData.types";
 import AllUsers from "@/components/user/AllUsers";
-import Pagination from "@/components/helpers/Pagination";
+import Pagination from "@/components/common/Pagination";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 const UsersAdmin = () => {
   const [pageNum, setPageNum] = useState<number>(1);
   const [data, setData] = useState<UserList>();

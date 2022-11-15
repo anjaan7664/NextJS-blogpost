@@ -1,14 +1,11 @@
-import React, { Component, useState } from "react";
-import { EditorState } from "draft-js";
-import dynamic from "next/dynamic";
-import { convertFromRaw, convertToRaw } from "draft-js";
+import React, { useEffect, useState } from "react";
+import { EditorState, ContentState } from "draft-js";
 import { convertToHTML } from "draft-convert";
-const Editor = dynamic(
-  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-  { ssr: false }
-);
+import htmlToDraft from "html-to-draftjs";
+import { Editor } from 'react-draft-wysiwyg';
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-const DraftEditor: React.FC<{ onChange: Function; value: string }> = ({
+const DraftEditor: React.FC<{ onChange: Function; value?: string }> = ({
   onChange,
   value,
 }) => {
@@ -24,9 +21,18 @@ const DraftEditor: React.FC<{ onChange: Function; value: string }> = ({
     let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
     onChange(currentContentAsHTML);
   };
+
   if (value) {
-    
+    const blocksFromHtml = htmlToDraft(value);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(
+      contentBlocks,
+      entityMap
+    );
+    const editorState = EditorState.createWithContent(contentState);
+    setEditorState(editorState);
   }
+
   return (
     <Editor
       editorState={editorState}

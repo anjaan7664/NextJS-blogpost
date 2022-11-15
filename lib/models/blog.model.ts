@@ -1,6 +1,6 @@
 import mongoose, { model, PaginateModel } from "mongoose";
 import paginate from "mongoose-paginate-v2";
-import { BlogInterface } from "@/types/blogData.types";
+import { BlogInterface } from "lib/types/blogData.types";
 export const BlogSchema = new mongoose.Schema(
   {
     title: String,

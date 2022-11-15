@@ -3,9 +3,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import { PageInterface } from "@/types/pageType.types";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import PageContent from "@/components/PageContent";
+import { PageInterface } from "lib/types/pageType.types";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import PageContent from "@/components/cms/PageContent";
 const Home: React.FC = () => {
   const router = useRouter();
   const [pageNum, setPageNum] = useState<number>(

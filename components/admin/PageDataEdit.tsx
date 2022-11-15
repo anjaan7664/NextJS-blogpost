@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { PageInterface } from "@/types/pageType.types";
+import { PageInterface } from "lib/types/pageType.types";
 import axios from "axios";
 
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import PageEdit from "../helpers/PageEdit";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import PageEdit from "../editor/PageEdit";
 
 const PageDataEdit: React.FC<{ pageName: String }> = ({ pageName }) => {
 

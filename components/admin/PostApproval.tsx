@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { BlogList } from "@/types/blogData.types";
+import { BlogList } from "lib/types/blogData.types";
 import PostApproval from "@/components/admin/PostTable";
-import Pagination from "@/components/helpers/Pagination";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import Pagination from "@/components/common/Pagination";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import PostTable from "@/components/admin/PostTable";
 const PostApprove: React.FC = () => {
   const [pageNum, setPageNum] = useState<number>(1);

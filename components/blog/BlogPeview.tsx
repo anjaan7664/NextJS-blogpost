@@ -1,4 +1,4 @@
-import { BlogInterface } from "@/types/blogData.types";
+import { BlogInterface } from "lib/types/blogData.types";
 import Link from "next/link";
 import React from "react";
 import parse from 'html-react-parser';

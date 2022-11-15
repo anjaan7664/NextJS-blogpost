@@ -1,12 +1,15 @@
-import { BlogInterface } from "@/types/blogData.types";
-import postReducer from "@/utils/reducers/postReducer";
+import { BlogInterface } from "lib/types/blogData.types";
+import postReducer from "lib/utils/reducers/postReducer";
 import React, { useReducer, useState } from "react";
-import { BlogActionType } from "@/utils/reducers/postReducer";
+import { BlogActionType } from "lib/utils/reducers/postReducer";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 import Image from "next/image";
-import DraftEditor from "../DraftEditor";
+import dynamic from "next/dynamic";
 
+const RichEditor = dynamic(() => import("@/components/common/RichEditor"), {
+  ssr: false,
+});
 const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
   const initialState = {
     title: blog.title,
@@ -95,7 +98,7 @@ const EditBlog: React.FC<{ blog: BlogInterface }> = ({ blog }) => {
           onChange={handleTitle}
         />
 
-        <DraftEditor value={newPost.body} onChange={handleBody} />
+        <RichEditor  value={newPost.body} onChange={handleBody}/>
         <button
           className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg mt-2"
           type="button"

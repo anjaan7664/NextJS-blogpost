@@ -1,6 +1,6 @@
 import mongoose, { model, PaginateModel } from "mongoose";
 import paginate from "mongoose-paginate-v2";
-import { UserInterface } from "@/types/userData.types";
+import { UserInterface } from "lib/types/userData.types";
 export const UserSchema = new mongoose.Schema(
   {
 

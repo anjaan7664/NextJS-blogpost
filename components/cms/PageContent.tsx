@@ -1,4 +1,4 @@
-import { PageInterface } from "@/types/pageType.types";
+import { PageInterface } from "lib/types/pageType.types";
 import React from "react";
 import Head from "next/head";
 import parse from 'html-react-parser';

@@ -1,4 +1,4 @@
-import { UserInterface } from "@/types/userData.types";
+import { UserInterface } from "lib/types/userData.types";
 import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";

@@ -1,5 +1,5 @@
-import connectMongo from "@/utils/connectMongo";
-import Pages from "@/models/pages.model";
+import connectMongo from "lib/utils/connectMongo";
+import Pages from "lib/models/pages.model";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 

@@ -1,4 +1,4 @@
-import TheFooter from "@/components/TheFooter";
+import TheFooter from "@/components/common/TheFooter";
 import TheHeader from "@/components/TheHeader";
 import React, { PropsWithChildren } from "react";
 

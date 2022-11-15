@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import axios from "axios";
-import { BlogInterface } from "@/types/blogData.types";
+import { BlogInterface } from "lib/types/blogData.types";
 const PostTable: React.FC<{ blog: BlogInterface, handleDelete:Function}> = ({ blog, handleDelete }) => {
   const approval = async (val: string) => {
     const response = await axios.post(

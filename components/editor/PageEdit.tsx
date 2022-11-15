@@ -1,10 +1,10 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { PageActionType } from "@/utils/reducers/pageReducer";
+import { PageActionType } from "lib/utils/reducers/pageReducer";
 import axios from "axios";
 import Router from "next/router";
-import { PageInterface } from "@/types/pageType.types";
-import pageReducer from "@/utils/reducers/pageReducer";
-import DraftEditor from "../DraftEditor";
+import { PageInterface } from "lib/types/pageType.types";
+import pageReducer from "lib/utils/reducers/pageReducer";
+import DraftEditor from "../common/DraftEditor";
 const PageEdit: React.FC<{ pageData: PageInterface }> = ({ pageData }) => {
   const initialState = {
     title: pageData.title,
